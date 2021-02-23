@@ -1,0 +1,14 @@
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+.row {
+  float: left;
+  width: 100%;
+}
+
+.column {
+  padding: 0px 15px;  
+  border-bottom: solid 1px #000;
+  float: left;
+  width: 50%;
+}
