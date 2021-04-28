@@ -2,25 +2,28 @@
 // Call Equal height function
 // =========================
 jQuery(window).load(function() {
-	equalheight('.row .column');
+	equalheight('.row .column','.column');
 });
 jQuery(window).resize(function(){
-	equalheight('.row .column');
+	equalheight('.row .column','.column');
 });
 
 // =========================
 // Equal height of Box base design.
 // =========================
-equalheight = function (container) {
+equalheight = function (container, rowItem = null) {
 	var currentTallest = 0,
 	currentRowStart = 0,
 	rowDivs = new Array(),
-	jQueryel,
+	$el,
 	topPosition = 0;
 	jQuery(container).each(function () {
-		jQueryel = jQuery(this);
-		jQuery(jQueryel).height('auto')
-		topPostion = jQueryel.position().top;
+		$el = jQuery(this);
+		jQuery($el).height('auto')
+		topPostion = $el.position().top;
+		if(rowItem){
+			topPostion = $el.closest(rowItem).position().top;
+		}
 
 		if (currentRowStart != topPostion) {
 			for (currentDiv = 0; currentDiv < rowDivs.length; currentDiv++) {
@@ -28,12 +31,12 @@ equalheight = function (container) {
 			}
 			rowDivs.length = 0; // empty the array
 			currentRowStart = topPostion;
-			currentTallest = jQueryel.height();
-			rowDivs.push(jQueryel);
+			currentTallest = $el.height();
+			rowDivs.push($el);
 		}
 		else {
-			rowDivs.push(jQueryel);
-			currentTallest = (currentTallest < jQueryel.height()) ? (jQueryel.height()) : (currentTallest);
+			rowDivs.push($el);
+			currentTallest = (currentTallest < $el.height()) ? ($el.height()) : (currentTallest);
 		}
 		for (currentDiv = 0; currentDiv < rowDivs.length; currentDiv++) {
 			rowDivs[currentDiv].height(currentTallest);
